@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using VacayVibe.API.Data;
+using VacayVibe.API.Logging;
 using VacayVibe.API.Models.DTO;
 
 namespace VacayVibe.API.Controllers;
@@ -9,8 +10,8 @@ namespace VacayVibe.API.Controllers;
 [ApiController]
 public class VillaController : ControllerBase
 {
-    private readonly ILogger<VillaController> _logger;
-    public VillaController(ILogger<VillaController> logger)
+    private readonly ILogging _logger;
+    public VillaController(ILogging logger)
     {
         _logger = logger;
     }
@@ -19,7 +20,7 @@ public class VillaController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<VillaDTO>> GetVillas()
     {
-        _logger.LogInformation("Getting all villas.");
+        _logger.Log("Getting all villas.", "warning");
         return Ok(VillaStore.villaList);
     }
     
@@ -31,7 +32,7 @@ public class VillaController : ControllerBase
     {
         if (id == 0)
         {
-            _logger.LogError("Get villa error with Id " + id);
+            _logger.Log("Get villa error with Id " + id, "error");
             return BadRequest();
         }
 
