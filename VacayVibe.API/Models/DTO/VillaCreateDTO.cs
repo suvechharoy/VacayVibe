@@ -2,9 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VacayVibe.API.Models.DTO;
 
-public class VillaDTO
+public class VillaCreateDTO
 {
-    public int Id { get; set; }
     [Required]
     [MaxLength(50)]
     public string Name { get; set; }
