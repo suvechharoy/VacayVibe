@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using VacayVibe.API.Data;
 using VacayVibe.API.Models;
 using VacayVibe.API.Models.DTO;
+using VacayVibe.API.Repository.IRepository;
 
 namespace VacayVibe.API.Controllers;
 
@@ -12,11 +13,11 @@ namespace VacayVibe.API.Controllers;
 [ApiController]
 public class VillaController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IVillaRepository _villaRepository;
     private readonly IMapper _mapper;
-    public VillaController(ApplicationDbContext context, IMapper mapper)
+    public VillaController(IVillaRepository villaRepository, IMapper mapper)
     {
-        _context = context;
+        _villaRepository = villaRepository;
         _mapper = mapper;
     }
     
@@ -24,7 +25,7 @@ public class VillaController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<VillaDTO>>> GetVillas()
     {
-        IEnumerable<Villa> villaList = await _context.Villas.ToListAsync();
+        IEnumerable<Villa> villaList = await _villaRepository.GetAllAsync();
         return Ok(_mapper.Map<List<VillaDTO>>(villaList));
     }
     
@@ -39,7 +40,7 @@ public class VillaController : ControllerBase
             return BadRequest();
         }
 
-        var villa = await _context.Villas.FirstOrDefaultAsync(x => x.Id == id);
+        var villa = await _villaRepository.GetAsync(x => x.Id == id);
         
         if (villa == null)
         {
@@ -55,7 +56,7 @@ public class VillaController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<VillaDTO>> CreateVilla([FromBody] VillaCreateDTO createDTO)
     {
-        if (await _context.Villas.FirstOrDefaultAsync(x => x.Name.ToLower() == createDTO.Name.ToLower()) != null)
+        if (await _villaRepository.GetAsync(x => x.Name.ToLower() == createDTO.Name.ToLower()) != null)
         {
             ModelState.AddModelError("Custom Error","Villa already exists!");
             return BadRequest(ModelState);
@@ -82,8 +83,7 @@ public class VillaController : ControllerBase
             Rate = createDTO.Rate,
             Sqft = createDTO.Sqft,
         };*/
-        await _context.Villas.AddAsync(model);
-        await _context.SaveChangesAsync();
+        await _villaRepository.CreateAsync(model);
         
         return CreatedAtRoute("GetVilla", new {id=model.Id}, model);
     }
@@ -98,13 +98,12 @@ public class VillaController : ControllerBase
         {
             return BadRequest();
         }
-        var villa = await _context.Villas.FirstOrDefaultAsync(x => x.Id == id);
+        var villa = await _villaRepository.GetAsync(x => x.Id == id);
         if (villa == null)
         {
             return NotFound();
         }
-        _context.Villas.Remove(villa);
-        await _context.SaveChangesAsync();
+        await _villaRepository.RemoveAsync(villa);
         return NoContent();
     }
 
@@ -135,8 +134,7 @@ public class VillaController : ControllerBase
             Rate = updateDTO.Rate,
             Sqft = updateDTO.Sqft,
         };*/
-        _context.Villas.Update(model);
-        await _context.SaveChangesAsync();
+        await _villaRepository.UpdateAsync(model);
         return NoContent();
     }
 
@@ -149,7 +147,7 @@ public class VillaController : ControllerBase
         {
             return BadRequest();
         }
-        var villa = await _context.Villas.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var villa = await _villaRepository.GetAsync(x => x.Id == id, tracked: false);
         
         VillaUpdateDTO villaDTO = _mapper.Map<VillaUpdateDTO>(villa);
         /*VillaUpdateDTO villaDTO = new()
@@ -184,8 +182,7 @@ public class VillaController : ControllerBase
             Sqft = villa.Sqft,
         };*/
         
-        _context.Villas.Update(model);
-        await _context.SaveChangesAsync();
+        await _villaRepository.UpdateAsync(model);
         
         if (!ModelState.IsValid)
         {
