@@ -1,22 +1,21 @@
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using VacayVibe.API.Data;
 using VacayVibe.API.Models;
 using VacayVibe.API.Repository.IRepository;
 
 namespace VacayVibe.API.Repository;
 
-public class VillaRepository : Repository<Villa>, IVillaRepository
+public class VillaNumberRepository : Repository<VillaNumber>, IVillaNumberRepository
 {
     private readonly ApplicationDbContext _context;
-    public VillaRepository(ApplicationDbContext context) : base(context)
+    public VillaNumberRepository(ApplicationDbContext context) : base(context)
     {
         _context = context;
     }
-    public async Task<Villa> UpdateAsync(Villa entity)
+
+    public async Task<VillaNumber> UpdateAsync(VillaNumber entity)
     {
         entity.UpdatedDate = DateTime.UtcNow;
-        _context.Villas.Update(entity);
+        _context.VillaNumbers.Update(entity);
         await _context.SaveChangesAsync();
         return entity;
     }
