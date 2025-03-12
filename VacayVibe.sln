@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacayVibe.API", "VacayVibe.API\VacayVibe.API.csproj", "{61627C0A-D01A-4262-B4AD-E214458A3F2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacayVibe.Web", "VacayVibe.Web\VacayVibe.Web.csproj", "{D75982C4-FFD4-49FC-8318-63E2E7704E97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacayVibe.Utility", "VacayVibe.Utility\VacayVibe.Utility.csproj", "{2F766098-9F81-4F4B-A716-D1B1590AC5A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{61627C0A-D01A-4262-B4AD-E214458A3F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61627C0A-D01A-4262-B4AD-E214458A3F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61627C0A-D01A-4262-B4AD-E214458A3F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D75982C4-FFD4-49FC-8318-63E2E7704E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D75982C4-FFD4-49FC-8318-63E2E7704E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D75982C4-FFD4-49FC-8318-63E2E7704E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D75982C4-FFD4-49FC-8318-63E2E7704E97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F766098-9F81-4F4B-A716-D1B1590AC5A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F766098-9F81-4F4B-A716-D1B1590AC5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F766098-9F81-4F4B-A716-D1B1590AC5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F766098-9F81-4F4B-A716-D1B1590AC5A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
