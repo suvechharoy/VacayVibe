@@ -16,7 +16,6 @@ public class VillaUpdateDTO
     public int Sqft { get; set; }
     [Required]
     public int Occupancy { get; set; }
-    [Required]
     public string ImageUrl { get; set; }
     public string Amenity { get; set; }
 }
