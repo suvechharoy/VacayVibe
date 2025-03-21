@@ -84,7 +84,7 @@ public class VillaController : ControllerBase
         {
             if (await _villaRepository.GetAsync(x => x.Name.ToLower() == createDTO.Name.ToLower()) != null)
             {
-                ModelState.AddModelError("Custom Error","Villa already exists!");
+                ModelState.AddModelError("ErrorMessages","Villa already exists!");
                 return BadRequest(ModelState);
             }
             if (createDTO == null)

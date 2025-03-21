@@ -33,7 +33,7 @@ public class VillaNumberController : ControllerBase
     {
         try
         {
-            IEnumerable<VillaNumber> villaNumberList = await _villaNumberRepository.GetAllAsync();
+            IEnumerable<VillaNumber> villaNumberList = await _villaNumberRepository.GetAllAsync(includeProperties:"Villa");
             _response.Result = _mapper.Map<List<VillaNumberDTO>>(villaNumberList);
             _response.StatusCode = HttpStatusCode.OK;
             return Ok(_response);
@@ -87,12 +87,12 @@ public class VillaNumberController : ControllerBase
         {
             if (await _villaNumberRepository.GetAsync(x => x.VillaNo == createDTO.VillaNo) != null)
             {
-                ModelState.AddModelError("Custom Error","Villa Number already exists!");
+                ModelState.AddModelError("ErrorMessages","Villa Number already exists!");
                 return BadRequest(ModelState);
             }
             if (await _villaRepository.GetAsync(u => u.Id == createDTO.VillaId) == null)
             {
-                ModelState.AddModelError("Custom Error","Villa ID is invalid!");
+                ModelState.AddModelError("ErrorMessages","Villa ID is invalid!");
                 return BadRequest(ModelState);
             }
             if (createDTO == null)
@@ -160,7 +160,7 @@ public class VillaNumberController : ControllerBase
             }
             if (await _villaRepository.GetAsync(u => u.Id == updateDTO.VillaId) == null)
             {
-                ModelState.AddModelError("Custom Error","Villa ID is invalid!");
+                ModelState.AddModelError("ErrorMessages","Villa ID is invalid!");
                 return BadRequest(ModelState);
             }
             //converting villaNumberDTO to villaNumber
