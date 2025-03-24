@@ -22,6 +22,31 @@ namespace VacayVibe.API.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("VacayVibe.API.Models.LocalUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LocalUsers");
+                });
+
             modelBuilder.Entity("VacayVibe.API.Models.Villa", b =>
                 {
                     b.Property<int>("Id")
@@ -67,7 +92,7 @@ namespace VacayVibe.API.Migrations
                         {
                             Id = 1,
                             Amenity = "",
-                            CreatedDate = new DateTime(2025, 3, 18, 6, 57, 52, 268, DateTimeKind.Utc).AddTicks(950),
+                            CreatedDate = new DateTime(2025, 3, 24, 6, 27, 18, 566, DateTimeKind.Utc).AddTicks(3860),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg",
                             Name = "Royal Villa",
@@ -80,7 +105,7 @@ namespace VacayVibe.API.Migrations
                         {
                             Id = 2,
                             Amenity = "",
-                            CreatedDate = new DateTime(2025, 3, 18, 6, 57, 52, 268, DateTimeKind.Utc).AddTicks(950),
+                            CreatedDate = new DateTime(2025, 3, 24, 6, 27, 18, 566, DateTimeKind.Utc).AddTicks(3860),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg",
                             Name = "Premium Pool Villa",
@@ -93,7 +118,7 @@ namespace VacayVibe.API.Migrations
                         {
                             Id = 3,
                             Amenity = "",
-                            CreatedDate = new DateTime(2025, 3, 18, 6, 57, 52, 268, DateTimeKind.Utc).AddTicks(950),
+                            CreatedDate = new DateTime(2025, 3, 24, 6, 27, 18, 566, DateTimeKind.Utc).AddTicks(3860),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg",
                             Name = "Luxury Pool Villa",
@@ -106,7 +131,7 @@ namespace VacayVibe.API.Migrations
                         {
                             Id = 4,
                             Amenity = "",
-                            CreatedDate = new DateTime(2025, 3, 18, 6, 57, 52, 268, DateTimeKind.Utc).AddTicks(960),
+                            CreatedDate = new DateTime(2025, 3, 24, 6, 27, 18, 566, DateTimeKind.Utc).AddTicks(3860),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa5.jpg",
                             Name = "Diamond Villa",
@@ -119,7 +144,7 @@ namespace VacayVibe.API.Migrations
                         {
                             Id = 5,
                             Amenity = "",
-                            CreatedDate = new DateTime(2025, 3, 18, 6, 57, 52, 268, DateTimeKind.Utc).AddTicks(960),
+                            CreatedDate = new DateTime(2025, 3, 24, 6, 27, 18, 566, DateTimeKind.Utc).AddTicks(3860),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa2.jpg",
                             Name = "Diamond Pool Villa",
