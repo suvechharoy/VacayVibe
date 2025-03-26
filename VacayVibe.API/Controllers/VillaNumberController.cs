@@ -1,5 +1,6 @@
 using System.Net;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -76,7 +77,7 @@ public class VillaNumberController : ControllerBase
         }
         return _response;
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -113,7 +114,7 @@ public class VillaNumberController : ControllerBase
         }
         return _response; 
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}", Name = "DeleteVillaNumber")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -145,7 +146,7 @@ public class VillaNumberController : ControllerBase
         }
         return _response; 
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}", Name = "UpdateVillaNumber")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

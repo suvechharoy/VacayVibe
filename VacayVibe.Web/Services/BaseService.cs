@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
@@ -48,6 +49,10 @@ public class BaseService : IBaseService
             }
 
             HttpResponseMessage apiResponse = null;
+            if (!string.IsNullOrEmpty(request.Token))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.Token);
+            }
             apiResponse = await client.SendAsync(message);
             
             var apiContent = await apiResponse.Content.ReadAsStringAsync();
