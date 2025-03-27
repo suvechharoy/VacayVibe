@@ -5,10 +5,11 @@ using VacayVibe.API.Models;
 using VacayVibe.API.Models.DTO;
 using VacayVibe.API.Repository.IRepository;
 
-namespace VacayVibe.API.Controllers;
+namespace VacayVibe.API.Controllers.v1;
 
-[Route("api/UsersAuth")]
+[Route("api/v{version:apiVersion}/UsersAuth")]
 [ApiController]
+[ApiVersionNeutral]//this states that this particular controller will be there no matter what the version is
 public class UsersController : Controller
 {
     private readonly IUserRepository _userRepository;
