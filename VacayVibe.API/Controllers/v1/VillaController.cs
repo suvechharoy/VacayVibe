@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -27,14 +28,33 @@ public class VillaController : ControllerBase
     }
     
     [HttpGet]
+    [ResponseCache(CacheProfileName = "Default30")]//will cache data every 30 secs the request is made
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<APIResponse>> GetVillas()
+    public async Task<ActionResult<APIResponse>> GetVillas([FromQuery] int? occupancy,
+        [FromQuery] string? search, int pageSize = 0, int pageNumber = 1)
     {
         try
         {
-            IEnumerable<Villa> villaList = await _villaRepository.GetAllAsync();
+            IEnumerable<Villa> villaList;
+            if (occupancy > 0) //filter
+            {
+                villaList = await _villaRepository.GetAllAsync(u => u.Occupancy == occupancy, pageSize: pageSize, pageNumber: pageNumber); //pagination
+            }
+            else
+            {
+                villaList = await _villaRepository.GetAllAsync(pageSize:pageSize, pageNumber:pageNumber); //pagination
+            }
+
+            if (!string.IsNullOrEmpty(search)) //search
+            {
+                villaList = villaList.Where(u => u.Name.ToLower().Contains(search));
+            }
+
+            Pagination pagination = new() { PageNumber = pageNumber, PageSize = pageSize };
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
+            
             _response.Result = _mapper.Map<List<VillaDTO>>(villaList);
             _response.StatusCode = HttpStatusCode.OK;
             return Ok(_response);

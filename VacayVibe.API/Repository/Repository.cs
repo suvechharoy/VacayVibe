@@ -17,7 +17,8 @@ public class Repository<T> : IRepository<T> where T : class
         //_context.VillaNumbers.Include(u => u.Villa).ToList();
         this.dbSet = _context.Set<T>();
     }
-    public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+    public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null, 
+        int pageSize = 0, int pageNumber = 1)
     {
         IQueryable<T> query = dbSet;
         if (filter != null)
@@ -25,6 +26,15 @@ public class Repository<T> : IRepository<T> where T : class
             query = query.Where(filter);
         }
 
+        if (pageSize > 0)
+        {
+            if (pageSize > 100)
+            {
+                pageSize = 100;
+            }
+            query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize); //general skip&take formula
+        }
+        
         if (includeProperties != null)
         {
             foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
